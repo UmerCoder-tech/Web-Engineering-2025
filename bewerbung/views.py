@@ -17,15 +17,19 @@ class StudentRegistrationForm(UserCreationForm):
 
 # ✅ Registrierung
 from django.contrib.auth import login
+from django.contrib.auth import get_backends
+
 
 def register(request):
     if request.method == "POST":
         form = StudentRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # <-- Automatisches Login
-            messages.success(request, "Registrierung erfolgreich! Du bist jetzt eingeloggt.")
-            return redirect("dashboard")  # Oder wohin du willst
+            # Backend manuell setzen (wichtig bei mehreren)
+            backend = get_backends()[0]  # erster aktiver Backend
+            login(request, user, backend=backend.__module__ + "." + backend.__class__.__name__)
+            messages.success(request, "Registrierung erfolgreich!")
+            return redirect("dashboard")
     else:
         form = StudentRegistrationForm()
     return render(request, "bewerbung/register.html", {"form": form})
