@@ -82,7 +82,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '12345',
         'HOST': '127.0.0.1',
-        'PORT': '',
+        'PORT': '3306',
         'OPTIONS': {
             'unix_socket': '/tmp/mysql.sock',  # Typischer Pfad auf macOS
         }
@@ -140,4 +140,8 @@ LOGIN_REDIRECT_URL = '/dashboard/'
 
 
 
+AUTHENTICATION_BACKENDS = [
+    'bewerbung.backends.UsernameOrEmailBackend',
+    'django.contrib.auth.backends.ModelBackend',  # als Fallback
+]
 
