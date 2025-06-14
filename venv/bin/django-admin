@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/umerhanif/Desktop/UNI/SEM4/Web Engineering/Web Projekt /venv/bin/python3.11" "$0" "$@"
+'''exec' "/Users/umerhanif/Desktop/UNI/SEM4/Web Engineering/Web-Engineering-2025/venv/bin/python3" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

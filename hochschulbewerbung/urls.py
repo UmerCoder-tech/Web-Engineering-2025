@@ -20,6 +20,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('bewerbung.urls')),  # ← verbindet dein App-URL-Routing
+    path('', include('frontend.urls')),      # Startseite, Bewerbung, Kontakt
+    #path('', include('bewerbung.urls')),      # Login, Register, Dashboard
 ]
-

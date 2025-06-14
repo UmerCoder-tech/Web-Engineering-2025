@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Startseite{% endblock %}
+
+{% block content %}
+
+<!-- Hero-Bereich -->
+<div class="container mt-5">
+  <div class="row align-items-center">
+
+    <!-- Text -->
+    <div class="col-md-6 mb-4 mb-md-0">
+      <h1 class="display-4 fw-bold">Studieren mit Zukunft</h1>
+      <p class="lead">
+        Entdecke unsere vielfältigen Studiengänge, moderne Lernformate und hervorragende Berufsperspektiven.
+        Ob Informatik, BWL oder Medien – finde deinen Weg an unserer Hochschule.
+      </p>
+      <a href="/bewerbung" class="btn btn-primary btn-lg mt-3">Jetzt bewerben</a>
+    </div>
+
+    <!-- Eigenes Bild -->
+    <div class="col-md-6 text-center">
+      <img src="{% static 'images/studenten.jpg' %}" alt="Studierende im Hörsaal" class="img-fluid rounded shadow">
+    </div>
+
+  </div>
+</div>
+
+<!-- Vorteile-Bereich -->
+<div class="container pt-5 mt-5">
+  <div class="row text-center">
+    <div class="col-md-4">
+      <h5>Digitale Lehre</h5>
+      <p>Interaktive Online-Vorlesungen und moderne Tools für deinen Lernerfolg.</p>
+    </div>
+    <div class="col-md-4">
+      <h5>Praxisnähe</h5>
+      <p>Projekte mit Partnerunternehmen und echte Anwendung im Studium.</p>
+    </div>
+    <div class="col-md-4">
+      <h5>Individuelle Förderung</h5>
+      <p>Persönliche Betreuung durch kleine Gruppen und Mentoring.</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
