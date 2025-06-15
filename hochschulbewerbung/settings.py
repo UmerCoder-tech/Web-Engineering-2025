@@ -1,14 +1,15 @@
 from pathlib import Path
+import platform
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Basisverzeichnis
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
+# Sicherheit
 SECRET_KEY = "django-insecure-)0ds4$=)kkp%z9ttav^d47a#fhd=mah7&#87v_2!@9yv%4-w^7"
 DEBUG = True
 ALLOWED_HOSTS = []
 
-# Application definition
+# Apps
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -16,11 +17,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "frontend",  # ✅ dein aktives App-Verzeichnis
+    "frontend",  # Dein App-Name
 ]
 
-AUTH_USER_MODEL = 'frontend.StudentUser'  # ✅ Benutzerdefiniertes User Model
+# Benutzerdefiniertes User-Modell
+AUTH_USER_MODEL = 'frontend.StudentUser'
 
+# Middleware
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -36,7 +39,7 @@ ROOT_URLCONF = "hochschulbewerbung.urls"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # du kannst hier z.B. BASE_DIR / "templates" hinzufügen bei Bedarf
+        'DIRS': [],  # Optional: BASE_DIR / "templates"
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -50,27 +53,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "hochschulbewerbung.wsgi.application"
-"""""
-# Datenbank
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bewerbung_neu',  # <--- HIER geändert
-        'USER': 'root',
-        'PASSWORD': '12345',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'OPTIONS': {
-            'unix_socket': '/tmp/mysql.sock',
-        }
-    }
-}
-"""
 
-import platform
-
+# Betriebssystemerkennung
 IS_WINDOWS = platform.system() == 'Windows'
 
+# Datenbank (MySQL)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -80,25 +67,20 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {} if IS_WINDOWS else {
-            'unix_socket': '/tmp/mysql.sock'
+            'unix_socket': '/tmp/mysql.sock',
         },
     }
 }
 
-# Passwort-Validierung
+# ✉️ E-Mail-Testausgabe ins Terminal (nicht produktiv!)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Passwortvalidierung
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 # Internationalisierung
@@ -110,14 +92,14 @@ USE_TZ = True
 # Statische Dateien
 STATIC_URL = "static/"
 
-# Primärschlüssel-Standard
+# Automatischer Primärschlüssel
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Nach Login weiterleiten
+# Weiterleitung nach Login
 LOGIN_REDIRECT_URL = '/dashboard/'
 
-# 🔐 Authentifizierungs-Backends
+# Authentifizierungs-Backends
 AUTHENTICATION_BACKENDS = [
-    #'frontend.backends.UsernameOrEmailBackend',  # ✅ korrigiert
-    'django.contrib.auth.backends.ModelBackend',  # Standard fallback
+    # 'frontend.backends.UsernameOrEmailBackend',  # optional
+    'django.contrib.auth.backends.ModelBackend',
 ]

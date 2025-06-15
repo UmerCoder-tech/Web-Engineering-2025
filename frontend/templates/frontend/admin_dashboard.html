@@ -5,14 +5,54 @@
   <p>Willkommen zurück, {{ user.username }}.</p>
 
   <h3>Bewerbungen:</h3>
-  <ul class="list-group">
-    {% for bewerbung in bewerbungen %}
-      <li class="list-group-item">
-        {{ bewerbung.name }} – {{ bewerbung.studiengang }}
-      </li>
-    {% empty %}
-      <li class="list-group-item">Keine Bewerbungen vorhanden.</li>
-    {% endfor %}
-  </ul>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>E-Mail</th>
+        <th>Studiengang</th>
+        <th>Abschluss</th>
+        <th>Form</th>
+        <th>Sprachen</th>
+        <th>Status</th>
+        <th>Aktion</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for b in bewerbungen %}
+        <tr>
+          <td>{{ b.name }}</td>
+          <td>{{ b.email }}</td>
+          <td>{{ b.studiengang }}</td>
+          <td>{{ b.abschluss }}</td>
+          <td>{{ b.form }}</td>
+          <td>{{ b.sprachen }}</td>
+          <td>{{ b.status }}</td>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <a href="{{ b.datei.url }}" class="btn btn-link btn-sm p-0" target="_blank">Datei</a>
+
+              {% if b.status == "neu" %}
+              <form method="post" class="m-0">
+                {% csrf_token %}
+                <input type="hidden" name="bewerbung_id" value="{{ b.id }}">
+                <input type="hidden" name="aktion" value="annehmen">
+                <button type="submit" class="btn btn-success btn-sm">Annehmen</button>
+              </form>
+              <form method="post" class="m-0">
+                {% csrf_token %}
+                <input type="hidden" name="bewerbung_id" value="{{ b.id }}">
+                <input type="hidden" name="aktion" value="ablehnen">
+                <button type="submit" class="btn btn-danger btn-sm">Ablehnen</button>
+              </form>
+              {% endif %}
+            </div>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="8">Noch keine Bewerbungen eingegangen.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock %}

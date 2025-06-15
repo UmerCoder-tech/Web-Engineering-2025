@@ -1,28 +1,57 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container mt-5">
-  <h1>Bewerbung</h1>
-  <p>Fülle das Bewerbungsformular aus:</p>
+{% load form_tags %}
 
-  <form method="post">
+<div class="container mt-5" style="max-width: 600px;">
+  <h1 class="mb-4 text-center">🎓 Bewerbung</h1>
+  <p class="text-center text-muted mb-4">Fülle das Bewerbungsformular aus und lade deine Unterlagen hoch.</p>
+
+  <form method="post" enctype="multipart/form-data" class="bg-white p-4 rounded shadow-sm border">
     {% csrf_token %}
+    
     <div class="mb-3">
-      <label for="name" class="form-label">Name:</label>
-      <input type="text" class="form-control" id="name" placeholder="Max Mustermann">
+      <label class="form-label">Name</label>
+      {{ form.name|add_class:"form-control" }}
     </div>
+
     <div class="mb-3">
-      <label for="email" class="form-label">E-Mail:</label>
-      <input type="email" class="form-control" id="email" placeholder="max@example.com">
+      <label class="form-label">E-Mail</label>
+      {{ form.email|add_class:"form-control" }}
     </div>
+
     <div class="mb-3">
-      <label for="studiengang" class="form-label">Studiengang:</label>
-      <select class="form-select" id="studiengang">
-        <option>Informatik</option>
-        <option>BWL</option>
-        <option>Medien</option>
-      </select>
+      <label class="form-label">Studiengang</label>
+      {{ form.studiengang|add_class:"form-select" }}
     </div>
-    <button type="submit" class="btn btn-primary">Absenden</button>
+
+    <div class="mb-3">
+      <label class="form-label">Abschluss</label>
+      {{ form.abschluss|add_class:"form-select" }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Form</label>
+      {{ form.form|add_class:"form-select" }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Sprachen</label>
+      {{ form.sprachen|add_class:"form-control" }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Zugangsvoraussetzungen</label>
+      {{ form.voraussetzungen|add_class:"form-control" }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Datei hochladen</label>
+      {{ form.datei|add_class:"form-control" }}
+    </div>
+
+    <div class="text-end">
+      <button type="submit" class="btn btn-primary px-4">Absenden</button>
+    </div>
   </form>
 </div>
 {% endblock %}

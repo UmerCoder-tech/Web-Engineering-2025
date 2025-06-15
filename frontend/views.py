@@ -1,28 +1,44 @@
-from django.shortcuts import render
-from frontend.models import StudentUser
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.conf import settings
 
-def home(request):
-    return render(request, 'home.html')
+from .models import StudentUser, Bewerbung
+from .forms import BewerbungForm
+from .registrieren import StudentRegistrationForm
 
-# frontend/views.py
+
 def home(request):
     bewerber_liste = StudentUser.objects.all()
     return render(request, 'home.html', {'bewerber': bewerber_liste})
 
 
 def bewerbung(request):
-    return render(request, 'bewerbung.html')
+    if request.method == "POST":
+        form = BewerbungForm(request.POST, request.FILES)
+        if form.is_valid():
+            bewerbung = form.save(commit=False)
+            bewerbung.status = "neu"  # explizit setzen, obwohl default existiert
+            bewerbung.save()
+            messages.success(request, "Bewerbung erfolgreich eingereicht!")
+            return redirect("home")
+        else:
+            messages.error(request, "Fehler beim Absenden des Formulars.")
+    else:
+        form = BewerbungForm()
+    return render(request, "bewerbung.html", {"form": form})
+
+
 
 def kontakt(request):
     return render(request, 'kontakt.html')
 
+
 def login_view(request):
     return render(request, 'login.html')
 
-from .registrieren import StudentRegistrationForm
-from django.contrib.auth import login
-from django.contrib import messages
-from django.shortcuts import redirect
 
 def register(request):
     if request.method == "POST":
@@ -37,11 +53,6 @@ def register(request):
     return render(request, "register.html", {"form": form})
 
 
-from django.contrib.auth import authenticate, login
-
-from django.contrib.auth import authenticate, login
-from django.contrib import messages
-
 def admin_login_view(request):
     if request.method == "POST":
         email = request.POST["email"]
@@ -49,29 +60,65 @@ def admin_login_view(request):
         user = authenticate(request, email=email, password=password)
         if user is not None and user.is_staff:
             login(request, user)
-            return redirect("admin_dashboard")  # Zielseite für Admin
+            return redirect("admin_dashboard")
         else:
             messages.error(request, "Zugang verweigert oder falsche Daten.")
     return render(request, "admin_login.html")
 
 
-# views.py
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from .models import Bewerbung
-
 @login_required
 def admin_dashboard(request):
     if not request.user.is_staff:
-        return redirect("login")  # normale User blockieren
+        return redirect("login")
+
+    if request.method == "POST":
+        bewerbung_id = request.POST.get("bewerbung_id")
+        aktion = request.POST.get("aktion")
+
+        try:
+            bewerbung = Bewerbung.objects.get(id=bewerbung_id)
+
+            if aktion == "annehmen":
+                bewerbung.status = "angenommen"
+                bewerbung.save()
+
+                send_mail(
+                    subject="Ihre Bewerbung wurde angenommen",
+                    message=(
+                        f"Hallo {bewerbung.name},\n\n"
+                        f"herzlichen Glückwunsch! Ihre Bewerbung für den Studiengang "
+                        f"{bewerbung.get_studiengang_display()} wurde angenommen."
+                    ),
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[bewerbung.email],
+                    fail_silently=False,
+                )
+
+            elif aktion == "ablehnen":
+                bewerbung.status = "abgelehnt"
+                bewerbung.save()
+
+                send_mail(
+                    subject="Ihre Bewerbung wurde abgelehnt",
+                    message=(
+                        f"Hallo {bewerbung.name},\n\n"
+                        f"leider müssen wir Ihnen mitteilen, dass Ihre Bewerbung für den Studiengang "
+                        f"{bewerbung.get_studiengang_display()} abgelehnt wurde."
+                    ),
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[bewerbung.email],
+                    fail_silently=False,
+                )
+
+        except Bewerbung.DoesNotExist:
+            messages.error(request, "Bewerbung nicht gefunden.")
+
+        return redirect("admin_dashboard")
 
     bewerbungen = Bewerbung.objects.all()
     return render(request, "frontend/admin_dashboard.html", {"bewerbungen": bewerbungen})
 
-from django.contrib.auth import logout
 
 def logout_view(request):
     logout(request)
     return redirect("home")
-
-# Create your views here.
