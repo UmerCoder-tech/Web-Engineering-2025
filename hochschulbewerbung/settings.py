@@ -50,7 +50,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "hochschulbewerbung.wsgi.application"
-
+"""""
 # Datenbank
 DATABASES = {
     'default': {
@@ -63,6 +63,25 @@ DATABASES = {
         'OPTIONS': {
             'unix_socket': '/tmp/mysql.sock',
         }
+    }
+}
+"""
+
+import platform
+
+IS_WINDOWS = platform.system() == 'Windows'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'bewerbung_neu',
+        'USER': 'root',
+        'PASSWORD': '12345',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'OPTIONS': {} if IS_WINDOWS else {
+            'unix_socket': '/tmp/mysql.sock'
+        },
     }
 }
 

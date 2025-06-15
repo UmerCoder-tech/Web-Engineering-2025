@@ -5,7 +5,7 @@ Passwort: admin123
 
 Username: admin
 
-**Test User**
+**Test-User**
 
 Email: test@gmail.com
 
