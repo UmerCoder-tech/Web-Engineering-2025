@@ -37,5 +37,41 @@ def register(request):
     return render(request, "register.html", {"form": form})
 
 
+from django.contrib.auth import authenticate, login
+
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
+def admin_login_view(request):
+    if request.method == "POST":
+        email = request.POST["email"]
+        password = request.POST["password"]
+        user = authenticate(request, email=email, password=password)
+        if user is not None and user.is_staff:
+            login(request, user)
+            return redirect("admin_dashboard")  # Zielseite für Admin
+        else:
+            messages.error(request, "Zugang verweigert oder falsche Daten.")
+    return render(request, "admin_login.html")
+
+
+# views.py
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .models import Bewerbung
+
+@login_required
+def admin_dashboard(request):
+    if not request.user.is_staff:
+        return redirect("login")  # normale User blockieren
+
+    bewerbungen = Bewerbung.objects.all()
+    return render(request, "frontend/admin_dashboard.html", {"bewerbungen": bewerbungen})
+
+from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
+    return redirect("home")
 
 # Create your views here.

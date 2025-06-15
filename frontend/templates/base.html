@@ -18,13 +18,29 @@
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="/">Startseite</a></li>
-          <li class="nav-item"><a class="nav-link" href="/bewerbung">Bewerbung</a></li>
-          <li class="nav-item"><a class="nav-link" href="/kontakt">Kontakt</a></li>
-          <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-          <li class="nav-item"><a class="nav-link" href="/register">Registrieren</a></li>
+          {% if user.is_authenticated %}
+            {% if user.is_staff %}
+              <!-- Admin-Navigation -->
+              <li class="nav-item"><a class="nav-link" href="{% url 'admin_dashboard' %}">Adminbereich</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+              <!-- Normale Benutzer-Navigation -->
+              <li class="nav-item"><a class="nav-link" href="/">Startseite</a></li>
+              <li class="nav-item"><a class="nav-link" href="/bewerbung">Bewerbung</a></li>
+              <li class="nav-item"><a class="nav-link" href="/kontakt">Kontakt</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+            {% endif %}
+          {% else %}
+            <!-- Nicht eingeloggt -->
+            <li class="nav-item"><a class="nav-link" href="/">Startseite</a></li>
+            <li class="nav-item"><a class="nav-link" href="/bewerbung">Bewerbung</a></li>
+            <li class="nav-item"><a class="nav-link" href="/kontakt">Kontakt</a></li>
+            <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="/register">Registrieren</a></li>
+          {% endif %}
         </ul>
       </div>
     </div>

@@ -6,13 +6,18 @@
     {% csrf_token %}
     <div class="mb-3">
       <label for="email" class="form-label">E-Mail-Adresse:</label>
-      <input type="email" class="form-control" id="email" placeholder="name@example.com">
+      <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
     </div>
     <div class="mb-3">
       <label for="passwort" class="form-label">Passwort:</label>
-      <input type="password" class="form-control" id="passwort" placeholder="••••••••">
+      <input type="password" class="form-control" id="passwort" name="password" placeholder="••••••••" required>
     </div>
     <button type="submit" class="btn btn-primary w-100">Einloggen</button>
   </form>
+
+  <!-- Admin-Link -->
+  <div class="text-center mt-3">
+    <small>Du bist Admin? <a href="{% url 'admin_login' %}">Hier einloggen</a></small>
+  </div>
 </div>
 {% endblock %}

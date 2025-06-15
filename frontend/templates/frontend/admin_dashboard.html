@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h1 class="mb-4">Admin-Dashboard</h1>
+  <p>Willkommen zurück, {{ user.username }}.</p>
+
+  <h3>Bewerbungen:</h3>
+  <ul class="list-group">
+    {% for bewerbung in bewerbungen %}
+      <li class="list-group-item">
+        {{ bewerbung.name }} – {{ bewerbung.studiengang }}
+      </li>
+    {% empty %}
+      <li class="list-group-item">Keine Bewerbungen vorhanden.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

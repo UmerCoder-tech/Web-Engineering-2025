@@ -1,2 +1,13 @@
-Email(Username): Admin oder admin@gmail.com oder konstantinBBL@gmail.com😩
-Passwort: deniz2003!
+**ADMIN**
+Email: admin@gmail.com
+
+Passwort: admin123
+
+Username: admin
+
+**Test User**
+
+Email: test@gmail.com
+
+Passwort: umer2003!
+
