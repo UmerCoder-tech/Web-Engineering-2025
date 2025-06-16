@@ -15,12 +15,14 @@ def home(request):
     return render(request, 'home.html', {'bewerber': bewerber_liste})
 
 
+# 🔐 Bewerbung nur für eingeloggte Nutzer möglich
+@login_required(login_url="login")
 def bewerbung(request):
     if request.method == "POST":
         form = BewerbungForm(request.POST, request.FILES)
         if form.is_valid():
             bewerbung = form.save(commit=False)
-            bewerbung.status = "neu"  # explizit setzen, obwohl default existiert
+            bewerbung.status = "neu"
             bewerbung.save()
             messages.success(request, "Bewerbung erfolgreich eingereicht!")
             return redirect("home")
@@ -31,15 +33,26 @@ def bewerbung(request):
     return render(request, "bewerbung.html", {"form": form})
 
 
-
 def kontakt(request):
     return render(request, 'kontakt.html')
 
 
+# 🟡 Login-Logik aktiv
 def login_view(request):
-    return render(request, 'login.html')
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            login(request, user)
+            next_url = request.GET.get("next", "home")  # nach Login zurück zur vorherigen Seite
+            return redirect(next_url)
+        else:
+            messages.error(request, "Ungültige Zugangsdaten.")
+    return render(request, "login.html")
 
 
+# 🟢 Registrierung
 def register(request):
     if request.method == "POST":
         form = StudentRegistrationForm(request.POST)
@@ -53,6 +66,7 @@ def register(request):
     return render(request, "register.html", {"form": form})
 
 
+# 🔐 Admin Login separat
 def admin_login_view(request):
     if request.method == "POST":
         email = request.POST["email"]
@@ -66,6 +80,7 @@ def admin_login_view(request):
     return render(request, "admin_login.html")
 
 
+# 🛠 Adminbereich: Bewerbungen ansehen, annehmen, ablehnen + E-Mail
 @login_required
 def admin_dashboard(request):
     if not request.user.is_staff:
@@ -119,6 +134,7 @@ def admin_dashboard(request):
     return render(request, "frontend/admin_dashboard.html", {"bewerbungen": bewerbungen})
 
 
+# 🚪 Logout
 def logout_view(request):
     logout(request)
     return redirect("home")

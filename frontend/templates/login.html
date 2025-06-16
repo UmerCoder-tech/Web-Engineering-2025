@@ -15,9 +15,15 @@
     <button type="submit" class="btn btn-primary w-100">Einloggen</button>
   </form>
 
-  <!-- Admin-Link -->
+  <!-- Registrierung für neue Nutzer -->
   <div class="text-center mt-3">
+    <small>Noch kein Konto? <a href="{% url 'register' %}">Jetzt registrieren</a></small>
+  </div>
+
+  <!-- Admin-Link -->
+  <div class="text-center mt-2">
     <small>Du bist Admin? <a href="{% url 'admin_login' %}">Hier einloggen</a></small>
   </div>
 </div>
 {% endblock %}
+
