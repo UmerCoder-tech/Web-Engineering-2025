@@ -39,10 +39,11 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li>
-                    <a class="dropdown-item disabled">
+                    <span class="dropdown-item-text">
                       Eingeloggt als {{ user.get_full_name|default:user.email }}
-                    </a>
+                    </span>
                   </li>
+                  <li><a class="dropdown-item" href="{% url 'mein_profil' %}">👤 Mein Profil</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Logout</a></li>
                 </ul>
@@ -79,3 +80,4 @@
 
 </body>
 </html>
+

@@ -1,0 +1,29 @@
+<!-- mein_profil.html -->
+{% extends "base.html" %}
+{% block content %}
+  <div class="container">
+    <h1>Meine Bewerbungen</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Studiengang</th>
+          <th>Abschluss</th>
+          <th>Status</th>
+          <th>Gesendet am</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in bewerbungen %}
+          <tr>
+            <td>{{ b.get_studiengang_display }}</td>
+            <td>{{ b.get_abschluss_display }}</td>
+            <td>{{ b.status|title }}</td>
+            <td>{{ b.erstellt_am|date:"d.m.Y" }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4">Du hast noch keine Bewerbung eingereicht.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

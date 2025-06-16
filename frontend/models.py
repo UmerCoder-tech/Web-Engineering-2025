@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.conf import settings  # Für ForeignKey auf AUTH_USER_MODEL
 
 # 🔐 Benutzer-Modell
 ROLE_CHOICES = [
@@ -11,8 +12,11 @@ class StudentUser(AbstractUser):
     email = models.EmailField(unique=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
-    
+
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
+
+    def __str__(self):
+        return self.get_full_name() or self.email
 
 
 # 📄 Bewerbungsdaten
@@ -36,9 +40,16 @@ class Bewerbung(models.Model):
         ('abgelehnt', 'Abgelehnt'),
     ]
 
+    benutzer = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='bewerbungen',
+        null=True  # Optional: Falls es Alt-Daten ohne Benutzer gibt
+    )
+
     name = models.CharField(max_length=100)
     email = models.EmailField()
-    
+
     studiengang = models.CharField(
         max_length=20,
         choices=STUDIENGANG_WAHL,

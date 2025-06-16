@@ -16,18 +16,19 @@ def home(request):
 
 
 # 🔐 Bewerbung nur für eingeloggte Nutzer möglich
-@login_required(login_url="login")
+@login_required
 def bewerbung(request):
     if request.method == "POST":
         form = BewerbungForm(request.POST, request.FILES)
         if form.is_valid():
             bewerbung = form.save(commit=False)
             bewerbung.status = "neu"
+            bewerbung.benutzer = request.user  # Nutzerzuweisung
             bewerbung.save()
             messages.success(request, "Bewerbung erfolgreich eingereicht!")
-            return redirect("home")
+            return redirect("mein_profil")  # direkt zum Profil weiterleiten
         else:
-            messages.error(request, "Fehler beim Absenden des Formulars.")
+            messages.error(request, "Fehler beim Absenden der Bewerbung.")
     else:
         form = BewerbungForm()
     return render(request, "bewerbung.html", {"form": form})
@@ -37,7 +38,7 @@ def kontakt(request):
     return render(request, 'kontakt.html')
 
 
-# 🟡 Login-Logik aktiv
+# 🟡 Login
 def login_view(request):
     if request.method == "POST":
         email = request.POST.get("email")
@@ -45,7 +46,7 @@ def login_view(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            next_url = request.GET.get("next", "home")  # nach Login zurück zur vorherigen Seite
+            next_url = request.GET.get("next", "home")
             return redirect(next_url)
         else:
             messages.error(request, "Ungültige Zugangsdaten.")
@@ -66,7 +67,7 @@ def register(request):
     return render(request, "register.html", {"form": form})
 
 
-# 🔐 Admin Login separat
+# 🔐 Admin Login
 def admin_login_view(request):
     if request.method == "POST":
         email = request.POST["email"]
@@ -80,7 +81,7 @@ def admin_login_view(request):
     return render(request, "admin_login.html")
 
 
-# 🛠 Adminbereich: Bewerbungen ansehen, annehmen, ablehnen + E-Mail
+# 🛠 Admin-Dashboard
 @login_required
 def admin_dashboard(request):
     if not request.user.is_staff:
@@ -95,35 +96,21 @@ def admin_dashboard(request):
 
             if aktion == "annehmen":
                 bewerbung.status = "angenommen"
-                bewerbung.save()
-
-                send_mail(
-                    subject="Ihre Bewerbung wurde angenommen",
-                    message=(
-                        f"Hallo {bewerbung.name},\n\n"
-                        f"herzlichen Glückwunsch! Ihre Bewerbung für den Studiengang "
-                        f"{bewerbung.get_studiengang_display()} wurde angenommen."
-                    ),
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[bewerbung.email],
-                    fail_silently=False,
-                )
-
             elif aktion == "ablehnen":
                 bewerbung.status = "abgelehnt"
-                bewerbung.save()
+            bewerbung.save()
 
-                send_mail(
-                    subject="Ihre Bewerbung wurde abgelehnt",
-                    message=(
-                        f"Hallo {bewerbung.name},\n\n"
-                        f"leider müssen wir Ihnen mitteilen, dass Ihre Bewerbung für den Studiengang "
-                        f"{bewerbung.get_studiengang_display()} abgelehnt wurde."
-                    ),
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[bewerbung.email],
-                    fail_silently=False,
-                )
+            send_mail(
+                subject=f"Ihre Bewerbung wurde {bewerbung.status}",
+                message=(
+                    f"Hallo {bewerbung.name},\n\n"
+                    f"Ihre Bewerbung für den Studiengang "
+                    f"{bewerbung.get_studiengang_display()} wurde {bewerbung.status}."
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[bewerbung.email],
+                fail_silently=False,
+            )
 
         except Bewerbung.DoesNotExist:
             messages.error(request, "Bewerbung nicht gefunden.")
@@ -132,6 +119,15 @@ def admin_dashboard(request):
 
     bewerbungen = Bewerbung.objects.all()
     return render(request, "frontend/admin_dashboard.html", {"bewerbungen": bewerbungen})
+
+
+# 👤 Profilansicht für eingeloggte Nutzer
+@login_required
+def mein_profil(request):
+    bewerbungen = Bewerbung.objects.filter(benutzer=request.user)
+    return render(request, "frontend/mein_profil.html", {
+        "bewerbungen": bewerbungen,
+    })
 
 
 # 🚪 Logout
