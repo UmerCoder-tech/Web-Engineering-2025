@@ -1,57 +1,77 @@
 {% extends "base.html" %}
+{% block title %}Bewerbung{% endblock %}
+
 {% block content %}
-{% load form_tags %}
+<div class="container mt-5" style="max-width: 650px;">
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+      <h1 class="h4 mb-4 text-center">🎓 Bewerbung</h1>
+      <p class="text-center text-muted mb-4">Fülle das Bewerbungsformular aus und lade deine Unterlagen hoch.</p>
 
-<div class="container mt-5" style="max-width: 600px;">
-  <h1 class="mb-4 text-center">🎓 Bewerbung</h1>
-  <p class="text-center text-muted mb-4">Fülle das Bewerbungsformular aus und lade deine Unterlagen hoch.</p>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
 
-  <form method="post" enctype="multipart/form-data" class="bg-white p-4 rounded shadow-sm border">
-    {% csrf_token %}
-    
-    <div class="mb-3">
-      <label class="form-label">Name</label>
-      {{ form.name|add_class:"form-control" }}
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          {{ form.name }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">E-Mail</label>
+          {{ form.email }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Straße und Hausnummer</label>
+          {{ form.strasse }}
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">PLZ</label>
+            {{ form.plz }}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Ort</label>
+            {{ form.ort }}
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Land</label>
+          {{ form.land }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Studiengang</label>
+          {{ form.studiengang }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Abschluss</label>
+          {{ form.abschluss }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Form</label>
+          {{ form.form }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Sprache</label>
+          {{ form.sprachen }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Datei hochladen</label>
+          {{ form.datei }}
+        </div>
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-primary px-4">Absenden</button>
+        </div>
+      </form>
     </div>
-
-    <div class="mb-3">
-      <label class="form-label">E-Mail</label>
-      {{ form.email|add_class:"form-control" }}
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Studiengang</label>
-      {{ form.studiengang|add_class:"form-select" }}
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Abschluss</label>
-      {{ form.abschluss|add_class:"form-select" }}
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Form</label>
-      {{ form.form|add_class:"form-select" }}
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Sprachen</label>
-      {{ form.sprachen|add_class:"form-control" }}
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Zugangsvoraussetzungen</label>
-      {{ form.voraussetzungen|add_class:"form-control" }}
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Datei hochladen</label>
-      {{ form.datei|add_class:"form-control" }}
-    </div>
-
-    <div class="text-end">
-      <button type="submit" class="btn btn-primary px-4">Absenden</button>
-    </div>
-  </form>
+  </div>
 </div>
 {% endblock %}
