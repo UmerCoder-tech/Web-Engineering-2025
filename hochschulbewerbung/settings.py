@@ -9,6 +9,9 @@ SECRET_KEY = "django-insecure-)0ds4$=)kkp%z9ttav^d47a#fhd=mah7&#87v_2!@9yv%4-w^7
 DEBUG = True
 ALLOWED_HOSTS = []
 
+STATICFILES_DIRS = [ BASE_DIR / "bewerbung/static" ]
+
+
 # Apps
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -92,6 +95,8 @@ USE_TZ = True
 # Statische Dateien
 STATIC_URL = "static/"
 
+STATICFILES_DIRS = [ BASE_DIR / "bewerbung/static" ]
+
 # Automatischer Primärschlüssel
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -103,3 +108,6 @@ AUTHENTICATION_BACKENDS = [
     # 'frontend.backends.UsernameOrEmailBackend',  # optional
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+LOGIN_URL = 'login'
+

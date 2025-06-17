@@ -8,8 +8,6 @@
 <!-- Hero-Bereich -->
 <div class="container mt-5">
   <div class="row align-items-center">
-
-    <!-- Text -->
     <div class="col-md-6 mb-4 mb-md-0">
       <h1 class="display-4 fw-bold">Studieren mit Zukunft</h1>
       <p class="lead">
@@ -19,11 +17,9 @@
       <a href="/bewerbung" class="btn btn-primary btn-lg mt-3">Jetzt bewerben</a>
     </div>
 
-    <!-- Eigenes Bild -->
     <div class="col-md-6 text-center">
       <img src="{% static 'images/studenten.jpg' %}" alt="Studierende im Hörsaal" class="img-fluid rounded shadow">
     </div>
-
   </div>
 </div>
 
@@ -44,5 +40,92 @@
     </div>
   </div>
 </div>
+
+<!-- Campus-Videosektion -->
+<div class="container my-5">
+  <h2 class="text-center mb-4">Einblicke in unseren Campus</h2>
+
+  <div id="campusCarousel" class="carousel slide rounded shadow" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      
+      <!-- Video 1 -->
+      <div class="carousel-item active position-relative">
+        <video class="d-block w-100 rounded campus-video" autoplay loop muted playsinline>
+          <source src="{% static 'videos/campus.mp4' %}" type="video/mp4">
+        </video>
+        <div class="video-caption-bottom"><small>Campus der Hochschule Kiel</small></div>
+      </div>
+
+      <!-- Video 2 -->
+      <div class="carousel-item position-relative">
+        <video class="d-block w-100 rounded campus-video" autoplay loop muted playsinline>
+          <source src="{% static 'videos/faku_IT.mp4' %}" type="video/mp4">
+        </video>
+        <div class="video-caption-bottom"><small>Fakultät Informatik</small></div>
+      </div>
+
+      <!-- Video 3 -->
+      <div class="carousel-item position-relative">
+        <video class="d-block w-100 rounded campus-video" autoplay loop muted playsinline>
+          <source src="{% static 'videos/faku_Wirt.mp4' %}" type="video/mp4">
+        </video>
+        <div class="video-caption-bottom"><small>Fakultät Wirtschaft</small></div>
+      </div>
+
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#campusCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Zurück</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#campusCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Weiter</span>
+    </button>
+  </div>
+</div>
+
+<!-- Stil & Verhalten -->
+<style>
+.video-caption-bottom {
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  color: white;
+  font-size: 0.85rem;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
+}
+.video-caption-bottom.fade-in {
+  opacity: 1;
+}
+.video-caption-bottom.fade-out {
+  opacity: 0;
+}
+</style>
+
+<script>
+  const videos = document.querySelectorAll(".campus-video");
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const caption = entry.target.parentElement.querySelector('.video-caption-bottom');
+      if (entry.isIntersecting) {
+        caption.classList.add("fade-in");
+        caption.classList.remove("fade-out");
+
+        setTimeout(() => {
+          caption.classList.remove("fade-in");
+          caption.classList.add("fade-out");
+        }, 4000);
+      }
+    });
+  }, {
+    threshold: 0.6
+  });
+
+  videos.forEach(video => observer.observe(video));
+</script>
 
 {% endblock %}

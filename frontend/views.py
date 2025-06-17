@@ -120,6 +120,10 @@ def mein_profil(request):
         "bewerbungen": bewerbungen,
     })
 
+def startseite(request):
+    return render(request, 'startseite.html')
+
+
 
 # 🚪 Logout
 def logout_view(request):
