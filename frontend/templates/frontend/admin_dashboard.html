@@ -1,58 +1,84 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container mt-5">
-  <h1 class="mb-4">Admin-Dashboard</h1>
-  <p>Willkommen zurück, {{ user.username }}.</p>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-1">Admin-Dashboard</h1>
+      <p class="text-muted">Willkommen zurück, <strong>{{ user.username }}</strong>.</p>
+    </div>
+  </div>
 
-  <h3>Bewerbungen:</h3>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>E-Mail</th>
-        <th>Studiengang</th>
-        <th>Abschluss</th>
-        <th>Form</th>
-        <th>Sprachen</th>
-        <th>Status</th>
-        <th>Aktion</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for b in bewerbungen %}
-        <tr>
-          <td>{{ b.name }}</td>
-          <td>{{ b.email }}</td>
-          <td>{{ b.studiengang }}</td>
-          <td>{{ b.abschluss }}</td>
-          <td>{{ b.form }}</td>
-          <td>{{ b.sprachen }}</td>
-          <td>{{ b.status }}</td>
-          <td>
-            <div class="d-flex align-items-center gap-2">
-              <a href="{{ b.datei.url }}" class="btn btn-link btn-sm p-0" target="_blank">Datei</a>
-
-              {% if b.status == "neu" %}
-              <form method="post" class="m-0">
-                {% csrf_token %}
-                <input type="hidden" name="bewerbung_id" value="{{ b.id }}">
-                <input type="hidden" name="aktion" value="annehmen">
-                <button type="submit" class="btn btn-success btn-sm">Annehmen</button>
-              </form>
-              <form method="post" class="m-0">
-                {% csrf_token %}
-                <input type="hidden" name="bewerbung_id" value="{{ b.id }}">
-                <input type="hidden" name="aktion" value="ablehnen">
-                <button type="submit" class="btn btn-danger btn-sm">Ablehnen</button>
-              </form>
-              {% endif %}
-            </div>
-          </td>
-        </tr>
-      {% empty %}
-        <tr><td colspan="8">Noch keine Bewerbungen eingegangen.</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title">Bewerbungen</h5>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-primary">
+            <tr>
+              <th>Name</th>
+              <th>E-Mail</th>
+              <th>Studiengang</th>
+              <th>Abschluss</th>
+              <th>Form</th>
+              <th>Sprachen</th>
+              <th>Datei</th>
+              <th>Status</th>
+              <th>Aktion</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for b in bewerbungen %}
+              <tr>
+                <td>{{ b.name }}</td>
+                <td>{{ b.email }}</td>
+                <td>{{ b.studiengang }}</td>
+                <td>{{ b.abschluss }}</td>
+                <td>{{ b.form }}</td>
+                <td>{{ b.sprachen }}</td>
+                <td>
+                  {% if b.datei %}
+                    <a href="{{ b.datei.url }}" target="_blank" class="btn btn-outline-secondary btn-sm">
+                      <i class="bi bi-paperclip"></i> Öffnen
+                    </a>
+                  {% else %}
+                    <span class="text-muted small">Keine Datei</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <span class="badge {% if b.status == 'angenommen' %}bg-success
+                                      {% elif b.status == 'abgelehnt' %}bg-danger
+                                      {% else %}bg-secondary{% endif %}">
+                    {{ b.status|capfirst }}
+                  </span>
+                </td>
+                <td>
+                  {% if b.status == "neu" %}
+                    <div class="d-flex gap-1">
+                      <form method="post" class="d-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="bewerbung_id" value="{{ b.id }}">
+                        <input type="hidden" name="aktion" value="annehmen">
+                        <button type="submit" class="btn btn-success btn-sm">Annehmen</button>
+                      </form>
+                      <form method="post" class="d-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="bewerbung_id" value="{{ b.id }}">
+                        <input type="hidden" name="aktion" value="ablehnen">
+                        <button type="submit" class="btn btn-danger btn-sm">Ablehnen</button>
+                      </form>
+                    </div>
+                  {% else %}
+                    <span class="text-muted small">–</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="9" class="text-center text-muted">Keine Bewerbungen vorhanden.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

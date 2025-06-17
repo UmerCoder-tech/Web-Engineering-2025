@@ -8,6 +8,7 @@ from django.conf import settings
 from .models import StudentUser, Bewerbung
 from .forms import BewerbungForm
 from .registrieren import StudentRegistrationForm
+from mail.email import sende_bestaetigungs_email
 
 
 def home(request):
@@ -23,10 +24,10 @@ def bewerbung(request):
         if form.is_valid():
             bewerbung = form.save(commit=False)
             bewerbung.status = "neu"
-            bewerbung.benutzer = request.user  # Nutzerzuweisung
+            bewerbung.benutzer = request.user
             bewerbung.save()
             messages.success(request, "Bewerbung erfolgreich eingereicht!")
-            return redirect("mein_profil")  # direkt zum Profil weiterleiten
+            return redirect("mein_profil")
         else:
             messages.error(request, "Fehler beim Absenden der Bewerbung.")
     else:
@@ -100,17 +101,7 @@ def admin_dashboard(request):
                 bewerbung.status = "abgelehnt"
             bewerbung.save()
 
-            send_mail(
-                subject=f"Ihre Bewerbung wurde {bewerbung.status}",
-                message=(
-                    f"Hallo {bewerbung.name},\n\n"
-                    f"Ihre Bewerbung für den Studiengang "
-                    f"{bewerbung.get_studiengang_display()} wurde {bewerbung.status}."
-                ),
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[bewerbung.email],
-                fail_silently=False,
-            )
+            sende_bestaetigungs_email(bewerbung.email, bewerbung.status, bewerbung.name)
 
         except Bewerbung.DoesNotExist:
             messages.error(request, "Bewerbung nicht gefunden.")

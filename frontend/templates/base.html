@@ -27,25 +27,33 @@
             {% if user.is_staff %}
               <!-- Admin-Navigation -->
               <li class="nav-item"><a class="nav-link" href="{% url 'admin_dashboard' %}">Adminbereich</a></li>
-              <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+              <li class="nav-item"><a class="nav-link text-danger" href="{% url 'logout' %}">Logout</a></li>
             {% else %}
-              <!-- Normale Benutzer mit Profil-Icon -->
+              <!-- Normale Benutzer mit modernem Dropdown -->
               <li class="nav-item"><a class="nav-link" href="/">Startseite</a></li>
               <li class="nav-item"><a class="nav-link" href="/bewerbung">Bewerbung</a></li>
               <li class="nav-item"><a class="nav-link" href="/kontakt">Kontakt</a></li>
+
+              <!-- Benutzer-Dropdown -->
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
-                  <i class="bi bi-person-circle fs-5"></i>
+                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-person-circle fs-5 me-1"></i>
+                  <span class="d-none d-md-inline">{{ user.username }}</span>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <li>
-                    <span class="dropdown-item-text">
-                      Eingeloggt als {{ user.get_full_name|default:user.email }}
-                    </span>
-                  </li>
-                  <li><a class="dropdown-item" href="{% url 'mein_profil' %}">👤 Mein Profil</a></li>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                  <li><h6 class="dropdown-header text-muted small">Eingeloggt als</h6></li>
+                  <li><span class="dropdown-item-text fw-semibold">{{ user.username }}</span></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Logout</a></li>
+                  <li><a class="dropdown-item" href="{% url 'mein_profil' %}"><i class="bi bi-person me-2"></i> Mein Profil</a></li>
+                  <li>
+                    <form method="POST" action="{% url 'logout' %}">
+                      {% csrf_token %}
+                      <button class="dropdown-item text-danger" type="submit">
+                        <i class="bi bi-box-arrow-right me-2"></i> Logout
+                      </button>
+                    </form>
+                  </li>
                 </ul>
               </li>
             {% endif %}
@@ -80,4 +88,3 @@
 
 </body>
 </html>
-
