@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+
 <div class="container mt-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
@@ -68,7 +69,12 @@
                       </form>
                     </div>
                   {% else %}
-                    <span class="text-muted small">–</span>
+                  <form action="{% url 'admin_bewerbung_loeschen' b.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-secondary btn-sm" onclick="return confirm('Bewerbung wirklich löschen?')">
+                      🗑️ Löschen
+                    </button>
+                  </form>                  
                   {% endif %}
                 </td>
               </tr>

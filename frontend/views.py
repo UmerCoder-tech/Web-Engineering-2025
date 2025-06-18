@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 from django.core.mail import send_mail
 from django.conf import settings
 
@@ -9,6 +9,11 @@ from .models import StudentUser, Bewerbung
 from .forms import BewerbungForm
 from .registrieren import StudentRegistrationForm
 from mail.email import sende_bestaetigungs_email
+from django.contrib.auth.decorators import user_passes_test
+
+
+
+
 
 
 def home(request):
@@ -119,6 +124,12 @@ def mein_profil(request):
     return render(request, "frontend/mein_profil.html", {
         "bewerbungen": bewerbungen,
     })
+
+@user_passes_test(lambda u: u.is_staff)
+def bewerbung_loeschen(request, pk):
+    bewerbung = get_object_or_404(Bewerbung, pk=pk)
+    bewerbung.delete()
+    return redirect('admin_dashboard')
 
 def startseite(request):
     return render(request, 'startseite.html')

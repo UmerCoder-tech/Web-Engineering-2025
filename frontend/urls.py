@@ -13,6 +13,7 @@ urlpatterns = [
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('logout/', views.logout_view, name='logout'),
     path("profil/", views.mein_profil, name="mein_profil"),
-    path('', views.startseite, name='startseite')
-
+    path('', views.startseite, name='startseite'),
+    path('admin-dashboard/bewerbung-loeschen/<int:pk>/', views.bewerbung_loeschen, name='admin_bewerbung_loeschen')
 ]
+
