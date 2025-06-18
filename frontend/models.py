@@ -60,10 +60,11 @@ class Bewerbung(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
 
-    strasse = models.CharField(max_length=100)
-    plz = models.CharField(max_length=10)
-    ort = models.CharField(max_length=50)
-    land = models.CharField(max_length=50)
+    strasse = models.CharField(max_length=100, default='Unbekannt')
+    plz = models.CharField(max_length=10, default='00000')
+    ort = models.CharField(max_length=50, default='Unbekannt')
+    land = models.CharField(max_length=50, default='Deutschland')
+
 
     studiengang = models.CharField(max_length=20, choices=STUDIENGANG_WAHL, default='inf')
     abschluss = models.CharField(max_length=20, choices=ABSCHLUSS_WAHL, default='bachelor')
