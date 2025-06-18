@@ -1,3 +1,5 @@
+
+
 {% extends "base.html" %}
 {% load static %}
 
@@ -40,6 +42,24 @@
     </div>
   </div>
 </div>
+*
+{# 
+  *** KI-GENERIERTER CODEABSCHNITT ***
+
+  Dieser Abschnitt (Campus-Karussell mit Videos, inklusive Untertitel, Animation und Steuerung) wurde mithilfe von OpenAI ChatGPT 4.0 generiert und anschließend in Struktur und Textinhalt leicht angepasst.
+
+  Qualität & Treffgenauigkeit:
+  Der Code war in sich konsistent, responsive und mit Bootstrap 5 kompatibel. Die Nutzung von `carousel`, `video`-Elementen und die Untertitel-Animation mit IntersectionObserver war direkt funktionsfähig.
+
+  Was fehlt:
+  Es fehlt eine barrierefreie Alternative (z. B. Bild mit Alt-Text für Videos), außerdem wären z. B. ein automatischer Stopp bei Userinteraktion oder ein Skip-Button für Barrierefreiheit sinnvoll gewesen.
+
+  Verbesserungspotenzial:
+  Bessere Kommentierung im ursprünglichen Code, zusätzliche Kontrolloptionen (z. B. Play/Pause). Derzeitiger Stil ist funktional, aber designtechnisch minimalistisch gehalten.
+
+  Gesamteinschätzung:
+  Die KI-generierte Lösung ist praxistauglich für den Einsatz in Studienprojekten. Bei Produktivsystemen wäre allerdings ein UI/UX-Feinschliff sowie Accessibility-Review notwendig.
+#}
 
 <!-- Campus-Videos als Karussell -->
 <div class="container my-5">
@@ -53,7 +73,7 @@
         <video class="d-block w-100 rounded campus-video" autoplay loop muted playsinline>
           <source src="{% static 'videos/campus.mp4' %}" type="video/mp4">
         </video>
-        <div class="video-caption-bottom"><small>Campus der Hochschule Kiel</small></div>
+        <div class="video-caption-bottom"><small>Campus der Nord Academy</small></div>
       </div>
 
       <div class="carousel-item position-relative">
@@ -224,5 +244,7 @@
 
   videos.forEach(video => observer.observe(video));
 </script>
-
+{# *** ENDE KI-GENERIERTER CODEABSCHNITT *** #}
 {% endblock %}
+
+

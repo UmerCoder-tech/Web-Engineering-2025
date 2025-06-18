@@ -1,12 +1,4 @@
-"""""
-from django.apps import AppConfig
 
-
-class FrontendConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'frontend'
-
-"""
 
 # Importiert die AppConfig-Klasse, die verwendet wird, um Konfigurationsinformationen für eine Django-App bereitzustellen
 from django.apps import AppConfig
