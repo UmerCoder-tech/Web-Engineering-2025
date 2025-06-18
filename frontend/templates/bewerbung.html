@@ -2,30 +2,37 @@
 {% block title %}Bewerbung{% endblock %}
 
 {% block content %}
+<!-- Container für das Bewerbungsformular -->
 <div class="container mt-5" style="max-width: 650px;">
   <div class="card shadow-sm border-0">
     <div class="card-body p-4">
+      <!-- Überschrift -->
       <h1 class="h4 mb-4 text-center">🎓 Bewerbung</h1>
       <p class="text-center text-muted mb-4">Fülle das Bewerbungsformular aus und lade deine Unterlagen hoch.</p>
 
+      <!-- Formular -->
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
+        <!-- Name -->
         <div class="mb-3">
           <label class="form-label">Name</label>
           {{ form.name }}
         </div>
 
+        <!-- E-Mail -->
         <div class="mb-3">
           <label class="form-label">E-Mail</label>
           {{ form.email }}
         </div>
 
+        <!-- Straße -->
         <div class="mb-3">
           <label class="form-label">Straße und Hausnummer</label>
           {{ form.strasse }}
         </div>
 
+        <!-- PLZ und Ort nebeneinander -->
         <div class="row mb-3">
           <div class="col-md-6">
             <label class="form-label">PLZ</label>
@@ -37,36 +44,43 @@
           </div>
         </div>
 
+        <!-- Land -->
         <div class="mb-3">
           <label class="form-label">Land</label>
           {{ form.land }}
         </div>
 
+        <!-- Studiengang -->
         <div class="mb-3">
           <label class="form-label">Studiengang</label>
           {{ form.studiengang }}
         </div>
 
+        <!-- Abschluss -->
         <div class="mb-3">
           <label class="form-label">Abschluss</label>
           {{ form.abschluss }}
         </div>
 
+        <!-- Studienform -->
         <div class="mb-3">
           <label class="form-label">Form</label>
           {{ form.form }}
         </div>
 
+        <!-- Sprache -->
         <div class="mb-3">
           <label class="form-label">Sprache</label>
           {{ form.sprachen }}
         </div>
 
+        <!-- Datei-Upload -->
         <div class="mb-3">
           <label class="form-label">Datei hochladen</label>
           {{ form.datei }}
         </div>
 
+        <!-- Absende-Button -->
         <div class="text-end">
           <button type="submit" class="text-white px-4 py-2 rounded" style="background-color: #222222;">
             Absenden

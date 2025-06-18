@@ -1,17 +1,28 @@
 {% extends "base.html" %}
+
 {% block content %}
+<!-- Container für das Login-Formular, zentriert mit max. Breite -->
 <div class="container mt-5" style="max-width: 400px;">
+  <!-- Überschrift -->
   <h1 class="mb-4 text-center">Admin-Login</h1>
+
+  <!-- Formular zum Einloggen, POST-Methode -->
   <form method="post">
-    {% csrf_token %}
+    {% csrf_token %}  <!-- CSRF-Token für Sicherheit bei POST -->
+
+    <!-- Eingabefeld für E-Mail -->
     <div class="mb-3">
       <label for="email" class="form-label">E-Mail-Adresse:</label>
       <input type="email" class="form-control" id="email" name="email" placeholder="admin@example.com" required>
     </div>
+
+    <!-- Eingabefeld für Passwort -->
     <div class="mb-3">
       <label for="password" class="form-label">Passwort:</label>
       <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required>
     </div>
+
+    <!-- Absende-Button -->
     <button type="submit" class="btn btn-primary w-100">Einloggen als Admin</button>
   </form>
 </div>

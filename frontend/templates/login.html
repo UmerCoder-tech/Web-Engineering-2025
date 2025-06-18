@@ -1,29 +1,38 @@
 {% extends "base.html" %}
+
 {% block content %}
+<!-- Login-Seite für reguläre Nutzer -->
 <div class="container mt-5" style="max-width: 400px;">
   <h1 class="mb-4">Login</h1>
+
+  <!-- Login-Formular -->
   <form method="post">
     {% csrf_token %}
+
+    <!-- E-Mail-Feld -->
     <div class="mb-3">
       <label for="email" class="form-label">E-Mail-Adresse:</label>
       <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
     </div>
+
+    <!-- Passwort-Feld -->
     <div class="mb-3">
       <label for="passwort" class="form-label">Passwort:</label>
       <input type="password" class="form-control" id="passwort" name="password" placeholder="••••••••" required>
     </div>
+
+    <!-- Absende-Button -->
     <button type="submit" class="btn w-100 text-white" style="background-color: #222222;">Einloggen</button>
   </form>
 
-  <!-- Registrierung für neue Nutzer -->
+  <!-- Link zur Registrierung -->
   <div class="text-center mt-3">
     <small>Noch kein Konto? <a href="{% url 'register' %}">Jetzt registrieren</a></small>
   </div>
 
-  <!-- Admin-Link -->
+  <!-- Link zum Admin-Login -->
   <div class="text-center mt-2">
     <small>Du bist Admin? <a href="{% url 'admin_login' %}">Hier einloggen</a></small>
   </div>
 </div>
 {% endblock %}
-

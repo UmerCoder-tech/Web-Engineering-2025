@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<!-- Hero-Bereich -->
+<!-- Hero-Bereich mit Call-to-Action -->
 <div class="container mt-5">
   <div class="row align-items-center">
     <div class="col-md-6 mb-4 mb-md-0">
@@ -15,7 +15,6 @@
         Ob Informatik, BWL oder Medien – finde deinen Weg an unserer Hochschule.
       </p>
       <a href="/bewerbung" class="btn btn-lg mt-3 text-white" style="background-color: #222222; border: none;">Jetzt bewerben</a>
-
     </div>
 
     <div class="col-md-6 text-center">
@@ -24,7 +23,7 @@
   </div>
 </div>
 
-<!-- Vorteile-Bereich -->
+<!-- Vorteile der Hochschule -->
 <div class="container pt-5 mt-5">
   <div class="row text-center">
     <div class="col-md-4">
@@ -42,14 +41,14 @@
   </div>
 </div>
 
-<!-- Campus-Videosektion -->
+<!-- Campus-Videos als Karussell -->
 <div class="container my-5">
   <h2 class="text-center mb-4">Einblicke in unsere Hochschule</h2>
 
   <div id="campusCarousel" class="carousel slide rounded shadow" data-bs-ride="carousel">
     <div class="carousel-inner">
-      
-      {% comment %} Video 1 {% endcomment %}
+
+      <!-- Verschiedene Campus-Videos mit Untertiteln -->
       <div class="carousel-item active position-relative">
         <video class="d-block w-100 rounded campus-video" autoplay loop muted playsinline>
           <source src="{% static 'videos/campus.mp4' %}" type="video/mp4">
@@ -57,7 +56,6 @@
         <div class="video-caption-bottom"><small>Campus der Hochschule Kiel</small></div>
       </div>
 
-      {% comment %} Video 2 {% endcomment %}
       <div class="carousel-item position-relative">
         <video class="d-block w-100 rounded campus-video" autoplay loop muted playsinline>
           <source src="{% static 'videos/faku_IT.mp4' %}" type="video/mp4">
@@ -65,7 +63,6 @@
         <div class="video-caption-bottom"><small>Fakultät Informatik</small></div>
       </div>
 
-      {% comment %} Video 3 {% endcomment %}
       <div class="carousel-item position-relative">
         <video class="d-block w-100 rounded campus-video" autoplay loop muted playsinline>
           <source src="{% static 'videos/faku_Wirt.mp4' %}" type="video/mp4">
@@ -73,7 +70,6 @@
         <div class="video-caption-bottom"><small>Fakultät Wirtschaft</small></div>
       </div>
 
-      {% comment %} Video 4 {% endcomment %}
       <div class="carousel-item position-relative">
         <video class="d-block w-100 rounded campus-video" autoplay loop muted playsinline>
           <source src="{% static 'videos/campus_night.mp4' %}" type="video/mp4">
@@ -81,7 +77,6 @@
         <div class="video-caption-bottom"><small>Campus bei Nacht</small></div>
       </div>
 
-      {% comment %} Video 5 {% endcomment %}
       <div class="carousel-item position-relative">
         <video class="d-block w-100 rounded campus-video" autoplay loop muted playsinline>
           <source src="{% static 'videos/learning_space.mp4' %}" type="video/mp4">
@@ -89,7 +84,6 @@
         <div class="video-caption-bottom"><small>Moderne Lernräume</small></div>
       </div>
 
-      {% comment %} Video 6 {% endcomment %}
       <div class="carousel-item position-relative">
         <video class="d-block w-100 rounded campus-video" autoplay loop muted playsinline>
           <source src="{% static 'videos/lecture.mp4' %}" type="video/mp4">
@@ -97,7 +91,6 @@
         <div class="video-caption-bottom"><small>Vorlesungsbetrieb live</small></div>
       </div>
 
-      {% comment %} Video 7 {% endcomment %}
       <div class="carousel-item position-relative">
         <video class="d-block w-100 rounded campus-video" autoplay loop muted playsinline>
           <source src="{% static 'videos/students.mp4' %}" type="video/mp4">
@@ -107,6 +100,7 @@
 
     </div>
 
+    <!-- Karussell-Steuerung -->
     <button class="carousel-control-prev" type="button" data-bs-target="#campusCarousel" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Zurück</span>
@@ -118,29 +112,28 @@
   </div>
 </div>
 
-<!-- Event-Sticky-Bereich -->
+<!-- Events / Angebote -->
 <div class="container my-5">
   <h2 class="text-center mb-4">Aktuelle Events & Angebote</h2>
   <div class="row row-cols-1 row-cols-md-3 g-4">
 
-    <!-- Sticky 1: IDW -->
+    <!-- Event 1 -->
     <div class="col">
       <div class="card h-100 shadow-sm border-0">
         <img src="{% static 'images/IDWs.png' %}" class="card-img-top" alt="Interdisziplinäre Woche">
         <div class="card-body">
           <h5 class="card-title">Interdisziplinäre Woche (IDW)</h5>
-          <!-- Datum, Dauer, Ort -->
           <ul class="list-unstyled mb-3">
             <li class="mb-1"><i class="bi bi-calendar-event me-2"></i>15. Sep. 2025</li>
             <li class="mb-1"><i class="bi bi-hourglass-split me-2"></i>1 Woche</li>
             <li class="mb-1"><i class="bi bi-geo-alt me-2"></i>Campus Kiel</li>
           </ul>
-          <p class="card-text">Erlebe eine Woche voller Workshops, Projekte und spannender Teamarbeit – offen für alle Studiengänge. Lerne, wie interdisziplinäres Denken Innovation fördert.</p>
+          <p class="card-text">Erlebe eine Woche voller Workshops, Projekte und spannender Teamarbeit – offen für alle Studiengänge.</p>
         </div>
       </div>
     </div>
 
-    <!-- Sticky 2: Karrieremesse -->
+    <!-- Event 2 -->
     <div class="col">
       <div class="card h-100 shadow-sm border-0">
         <img src="{% static 'images/messe.png' %}" class="card-img-top" alt="Karrieremesse">
@@ -151,12 +144,12 @@
             <li class="mb-1"><i class="bi bi-hourglass-split me-2"></i>1 Tag</li>
             <li class="mb-1"><i class="bi bi-geo-alt me-2"></i>Campus Kiel</li>
           </ul>
-          <p class="card-text">Triff führende Unternehmen auf dem Campus, sichere dir Praktika oder deinen ersten Job nach dem Studium. Jetzt vormerken und CV mitbringen!</p>
+          <p class="card-text">Triff führende Unternehmen auf dem Campus, sichere dir Praktika oder deinen ersten Job nach dem Studium.</p>
         </div>
       </div>
     </div>
 
-    <!-- Sticky 3: Sportsday -->
+    <!-- Event 3 -->
     <div class="col">
       <div class="card h-100 shadow-sm border-0">
         <img src="{% static 'images/sport.png' %}" class="card-img-top" alt="Sportday">
@@ -167,7 +160,7 @@
             <li class="mb-1"><i class="bi bi-hourglass-split me-2"></i>1 Tag</li>
             <li class="mb-1"><i class="bi bi-geo-alt me-2"></i>Campus Kiel</li>
           </ul>
-          <p class="card-text">Ein ganzer Tag voller Action! Stelle dich sportlichen Challenges, feuere dein Team an und erlebe den Campus von seiner aktivsten Seite!</p>
+          <p class="card-text">Ein ganzer Tag voller Action! Stelle dich sportlichen Challenges, feuere dein Team an und erlebe den Campus aktiv!</p>
         </div>
       </div>
     </div>
@@ -175,37 +168,20 @@
   </div>
 </div>
 
-<!-- Partner-Bereich -->
+<!-- Partnerlogos -->
 <div class="container my-5">
   <h2 class="text-center mb-4">Unsere Partner</h2>
   <div class="row row-cols-2 row-cols-md-4 g-4 justify-content-center align-items-center text-center">
-
-    <div class="col">
-      <img src="{% static 'images/BMW.webp' %}" class="img-fluid p-3" alt="BMW">
-    </div>
-    <div class="col">
-      <img src="{% static 'images/KPMG.webp' %}" class="img-fluid p-3" alt="Deloitte">
-    </div>
-    <div class="col">
-      <img src="{% static 'images/IBM.webp' %}" class="img-fluid p-3" alt="Nestlé">
-    </div>
-    <div class="col">
-      <img src="{% static 'images/Deloitte.webp' %}" class="img-fluid p-3" alt="KPMG">
-    </div>
-    <div class="col">
-      <img src="{% static 'images/desigual.webp' %}" class="img-fluid p-3" alt="Unilever">
-    </div>
-    <div class="col">
-      <img src="{% static 'images/UNILEVER.webp' %}" class="img-fluid p-3" alt="Accenture">
-    </div>
-
+    <div class="col"><img src="{% static 'images/BMW.webp' %}" class="img-fluid p-3" alt="BMW"></div>
+    <div class="col"><img src="{% static 'images/KPMG.webp' %}" class="img-fluid p-3" alt="Deloitte"></div>
+    <div class="col"><img src="{% static 'images/IBM.webp' %}" class="img-fluid p-3" alt="Nestlé"></div>
+    <div class="col"><img src="{% static 'images/Deloitte.webp' %}" class="img-fluid p-3" alt="KPMG"></div>
+    <div class="col"><img src="{% static 'images/desigual.webp' %}" class="img-fluid p-3" alt="Unilever"></div>
+    <div class="col"><img src="{% static 'images/UNILEVER.webp' %}" class="img-fluid p-3" alt="Accenture"></div>
   </div>
 </div>
 
-
-
-
-<!-- Stil & Verhalten -->
+<!-- Stil für Video-Untertitel -->
 <style>
 .video-caption-bottom {
   position: absolute;
@@ -225,6 +201,7 @@
 }
 </style>
 
+<!-- Animation für Video-Untertitel -->
 <script>
   const videos = document.querySelectorAll(".campus-video");
 
