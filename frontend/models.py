@@ -59,11 +59,17 @@ class Bewerbung(models.Model):
 
     name = models.CharField(max_length=100)
     email = models.EmailField()
-
+    """""
     strasse = models.CharField(max_length=100, default='Unbekannt')
     plz = models.CharField(max_length=10, default='00000')
     ort = models.CharField(max_length=50, default='Unbekannt')
     land = models.CharField(max_length=50, default='Deutschland')
+    """
+    strasse = models.CharField(max_length=100, blank=True)
+    plz = models.CharField(max_length=10, blank=True)
+    ort = models.CharField(max_length=50, blank=True)
+    land = models.CharField(max_length=50, default='Deutschland')  # Land kannst du optional als Standard behalten
+
 
 
     studiengang = models.CharField(max_length=20, choices=STUDIENGANG_WAHL, default='inf')

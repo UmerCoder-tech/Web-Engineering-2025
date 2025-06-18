@@ -1,6 +1,6 @@
 from pathlib import Path
 import platform
-
+import os 
 # Basisverzeichnis
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -10,6 +10,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 STATICFILES_DIRS = [ BASE_DIR / "bewerbung/static" ]
+
+
+#Dateien handhaben
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Apps
