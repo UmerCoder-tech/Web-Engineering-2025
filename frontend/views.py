@@ -12,16 +12,12 @@ from mail.email import sende_bestaetigungs_email
 from django.contrib.auth.decorators import user_passes_test
 
 
-
-
-
-
 def home(request):
     bewerber_liste = StudentUser.objects.all()
     return render(request, 'home.html', {'bewerber': bewerber_liste})
 
 
-# 🔐 Bewerbung nur für eingeloggte Nutzer möglich
+#Bewerbung nur für eingeloggte Nutzer möglich
 @login_required
 def bewerbung(request):
     if request.method == "POST":
@@ -44,7 +40,7 @@ def kontakt(request):
     return render(request, 'kontakt.html')
 
 
-# 🟡 Login
+#Login
 def login_view(request):
     if request.method == "POST":
         email = request.POST.get("email")
@@ -59,7 +55,7 @@ def login_view(request):
     return render(request, "login.html")
 
 
-# 🟢 Registrierung
+#Registrierung
 def register(request):
     if request.method == "POST":
         form = StudentRegistrationForm(request.POST)
@@ -73,7 +69,7 @@ def register(request):
     return render(request, "register.html", {"form": form})
 
 
-# 🔐 Admin Login
+#Admin Login
 def admin_login_view(request):
     if request.method == "POST":
         email = request.POST["email"]
@@ -87,7 +83,7 @@ def admin_login_view(request):
     return render(request, "admin_login.html")
 
 
-# 🛠 Admin-Dashboard
+#Admin-Dashboard
 @login_required
 def admin_dashboard(request):
     if not request.user.is_staff:
@@ -117,7 +113,7 @@ def admin_dashboard(request):
     return render(request, "frontend/admin_dashboard.html", {"bewerbungen": bewerbungen})
 
 
-# 👤 Profilansicht für eingeloggte Nutzer
+#Profilansicht für eingeloggte Nutzer
 @login_required
 def mein_profil(request):
     bewerbungen = Bewerbung.objects.filter(benutzer=request.user)
@@ -136,7 +132,7 @@ def startseite(request):
 
 
 
-# 🚪 Logout
+#Logout
 def logout_view(request):
     logout(request)
     return redirect("home")

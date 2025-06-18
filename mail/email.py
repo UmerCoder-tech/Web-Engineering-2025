@@ -12,7 +12,7 @@ def sende_bestaetigungs_email(empfaenger_email, status, bewerbername):
     yag = yagmail.SMTP(user=ABSENDER_EMAIL, password=APP_PASSWORT)
 
     if status == "angenommen":
-        betreff = "✅ Ihre Bewerbung bei der Nord Academy"
+        betreff = "Ihre Bewerbung bei der Nord Academy"
         inhalt = f"""
         <h2>Herzlichen Glückwunsch, {bewerbername}!</h2>
         <p>Ihre Bewerbung bei der <strong>Nord Academy</strong> wurde <span style="color:green;"><strong>angenommen</strong></span>.</p>
@@ -21,7 +21,7 @@ def sende_bestaetigungs_email(empfaenger_email, status, bewerbername):
         <p style="font-size:12px;color:gray;">Diese Nachricht wurde automatisch versendet. Bitte nicht antworten.</p>
         """
     else:
-        betreff = "❌ Ihre Bewerbung bei der Nord Academy"
+        betreff = "Ihre Bewerbung bei der Nord Academy"
         inhalt = f"""
         <h2>Hallo {bewerbername},</h2>
         <p>Leider müssen wir Ihnen mitteilen, dass Ihre Bewerbung bei der <strong>Nord Academy</strong> <span style="color:red;"><strong>abgelehnt</strong></span> wurde.</p>
@@ -37,4 +37,4 @@ def sende_bestaetigungs_email(empfaenger_email, status, bewerbername):
             contents=[inhalt],
         )
     except Exception as e:
-        print(f"❌ Fehler beim Mailversand: {e}")
+        print(f"Fehler beim Mailversand: {e}")
